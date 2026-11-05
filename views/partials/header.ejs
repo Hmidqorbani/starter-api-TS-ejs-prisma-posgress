@@ -1,0 +1,24 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="logo">
+      <img src="/static/assets/logo.svg" alt="logo" width="32" height="32">
+      <span>استارتر API</span>
+    </a>
+    <nav>
+      <% if (user) { %>
+        <% if (user.role === "admin") { %>
+          <a href="/admin" class="btn btn-ghost">پنل ادمین</a>
+        <% } else { %>
+          <a href="/dashboard" class="btn btn-ghost">پنل من</a>
+        <% } %>
+        <span class="user-badge"><%= user.firstName || user.email %></span>
+        <form action="/logout" method="POST" class="inline-form">
+          <button type="submit" class="btn btn-ghost">خروج</button>
+        </form>
+      <% } else { %>
+        <a href="/login" class="btn btn-ghost">ورود</a>
+        <a href="/register" class="btn btn-primary">ثبت‌نام</a>
+      <% } %>
+    </nav>
+  </div>
+</header>

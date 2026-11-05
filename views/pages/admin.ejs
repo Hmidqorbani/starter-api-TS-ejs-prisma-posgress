@@ -1,0 +1,124 @@
+<div class="admin-panel">
+  <header class="admin-header">
+    <h1>پنل ادمین</h1>
+    <span class="badge badge-admin">ادمین</span>
+  </header>
+
+  <div class="admin-layout">
+    <%- include("../partials/sidebar-admin", { current: 'users' }) %>
+
+    <main class="admin-content">
+      <section id="users" class="admin-section">
+        <div class="section-header">
+          <h2>👥 مدیریت کاربران</h2>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>نام</th>
+                <th>ایمیل</th>
+                <th>نقش</th>
+                <th>وضعیت</th>
+                <th>عملیات</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach((u, i) => { %>
+                <tr data-user-id="<%= u.id %>">
+                  <td><%= i + 1 %></td>
+                  <td><%= u.firstName %> <%= u.lastName %></td>
+                  <td><%= u.email %></td>
+                  <td>
+                    <select class="input role-select" data-user-id="<%= u.id %>" <%= u.id === user.id ? "disabled" : "" %>>
+                      <option value="user" <%= u.role === "user" ? "selected" : "" %>>کاربر</option>
+                      <option value="admin" <%= u.role === "admin" ? "selected" : "" %>>ادمین</option>
+                    </select>
+                  </td>
+                  <td>
+                    <label class="toggle">
+                      <input type="checkbox" class="active-toggle" data-user-id="<%= u.id %>" <%= u.isActive ? "checked" : "" %> <%= u.id === user.id ? "disabled" : "" %>>
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </td>
+                  <td>
+                    <span class="status-indicator <%= u.isActive ? "active" : "inactive" %>"></span>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="settings" class="admin-section">
+        <div class="section-header">
+          <h2>⚙️ مدیریت تنظیمات</h2>
+          <button type="button" class="btn btn-primary" id="add-setting-btn">➕ افزودن تنظیمات</button>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>کلید</th>
+                <th>مقدار</th>
+                <th>توضیح</th>
+                <th>عملیات</th>
+              </tr>
+            </thead>
+            <tbody id="settings-tbody">
+              <% settings.forEach((s, i) => { %>
+                <tr data-setting-id="<%= s.id %>">
+                  <td><%= i + 1 %></td>
+                  <td><code><%= s.key %></code></td>
+                  <td><input type="text" class="input setting-value" value="<%= s.value %>" data-setting-id="<%= s.id %>"></td>
+                  <td><input type="text" class="input setting-desc" value="<%= s.description || '' %>" data-setting-id="<%= s.id %>"></td>
+                  <td>
+                    <button type="button" class="btn btn-ghost btn-sm save-setting" data-setting-id="<%= s.id %>">💾 ذخیره</button>
+                    <button type="button" class="btn btn-danger btn-sm delete-setting" data-setting-id="<%= s.id %>">🗑️ حذف</button>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal for adding setting -->
+  <div class="modal-overlay" id="setting-modal" style="display: none;">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">➕ افزودن تنظیمات جدید</h3>
+        <button type="button" class="modal-close" id="close-modal">&times;</button>
+      </div>
+      <form id="setting-form" class="form">
+        <input type="hidden" name="id" id="setting-id">
+        <div class="form-group">
+          <label for="setting-key" class="label">کلید <span class="required">*</span></label>
+          <input type="text" id="setting-key" name="key" class="input" required placeholder="site_title">
+        </div>
+        <div class="form-group">
+          <label for="setting-value" class="label">مقدار</label>
+          <input type="text" id="setting-value" name="value" class="input" placeholder="My Site">
+        </div>
+        <div class="form-group">
+          <label for="setting-desc" class="label">توضیح</label>
+          <input type="text" id="setting-desc" name="description" class="input" placeholder="عنوان سایت">
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="cancel-modal">انصراف</button>
+          <button type="submit" class="btn btn-primary">ذخیره</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast container for notifications -->
+  <div id="toast-container"></div>
+</div>
+
+<script src="/static/js/admin.js"></script>

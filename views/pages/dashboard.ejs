@@ -1,0 +1,50 @@
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>پنل کاربر</h1>
+    <div class="user-profile">
+      <div class="user-avatar"><%= (user.firstName?.[0] || user.email?.[0] || "؟").toUpperCase() %></div>
+      <div class="user-info">
+        <span class="user-name"><%= user.firstName %> <%= user.lastName %></span>
+        <span class="user-email"><%= user.email %></span>
+        <span class="badge badge-user"><%= user.role === "admin" ? "ادمین" : "کاربر" %></span>
+      </div>
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>تنظیمات (نمونه)</h2>
+    <div class="table-responsive">
+      <table class="table" id="settings-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>کلید</th>
+            <th>مقدار</th>
+            <th>توضیح</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (settings && settings.length > 0) { %>
+            <% settings.forEach((s, i) => { %>
+              <tr>
+                <td><%= i + 1 %></td>
+                <td><code><%= s.key %></code></td>
+                <td><%= s.value %></td>
+                <td><%= s.description || "-" %></td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="4" class="text-center">هیچ تنظیماتی یافت نشد</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-actions">
+      <button type="button" class="btn btn-primary" id="refresh-settings">🔄 بروزرسانی</button>
+    </div>
+  </section>
+</div>
+
+<script src="/static/js/dashboard.js"></script>

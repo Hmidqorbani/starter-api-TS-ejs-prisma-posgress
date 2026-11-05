@@ -1,0 +1,20 @@
+<% if (typeof error !== "undefined" && error) { %>
+  <div class="container">
+    <div class="alert alert-error">❌ <%= ({
+      auth_required: "برای دسترسی، ابتدا وارد شوید.",
+      user_invalid: "حساب شما معتبر نیست.",
+      token_invalid: "نشست شما منقضی شده. دوباره وارد شوید.",
+      invalid_credentials: "ایمیل یا رمز عبور نادرست است.",
+      email_exists: "این ایمیل قبلاً ثبت شده است.",
+      invalid_input: "ورودی نامعتبر. رمز حداقل ۶ کاراکتر.",
+      server_error: "خطای سرور. لطفاً دوباره تلاش کن.",
+      forbidden: "شما دسترسی ادمین ندارید.",
+    })[error] || "خطایی رخ داد." %></div>
+  </div>
+<% } %>
+
+<% if (typeof success !== "undefined" && success === "registered") { %>
+  <div class="container">
+    <div class="alert alert-success">✅ ثبت‌نام موفق! حالا وارد شو.</div>
+  </div>
+<% } %>

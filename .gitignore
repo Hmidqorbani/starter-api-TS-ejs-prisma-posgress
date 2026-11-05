@@ -1,0 +1,21 @@
+# ─── secrets ───
+.env
+
+# ─── dependencies ───
+node_modules/
+dist/
+
+# ─── runtime dirs ───
+uploads/
+temp/
+
+# ─── logs ───
+logs/
+*.log
+npm-debug.log*
+
+# ─── os / editor ───
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
